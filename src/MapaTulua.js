@@ -1,23 +1,51 @@
 import React from 'react';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import iconRetina from 'leaflet/dist/images/marker-icon-2x.png';
 
-const posicionTulua = [4.09098,-76.196281]
-const posicionGasolineriaPrueba = [4.09098,-76.196281]
-const styleMap = { "width": "50%", "height": "60vh" }
+delete L.Icon.Default.prototype._getIconUrl;
 
-class MapaTulua extends React.Component{
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: iconRetina,
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+});
+
+const posicionTulua = [4.09098, -76.196281]
+const posicionGasolineriaPrueba = [4.090658384564016, -76.21557350577977]
+
+const listaGasolinerasCoordenada = [[4.08654, -76.20139], [4.06028, -76.19903],
+[4.06028, -76.19903], [4.08413, -76.19456],
+[4.08782, -76.21574], [4.07042, -76.19759],
+[4.08441, -76.20173], [4.10181, -76.1932],
+[4.09192, -76.17874],[4.09234, -76.17843],
+[4.08418, -76.18639],[4.07668, -76.18924],
+[4.0699, -76.193],[4.06521, -76.19667],
+[4.06926, -76.19722],[4.08968, -76.19186],
+[4.08985, -76.19155]]
+const styleMap = { "width": "100%", "height": "500px" }
+
+class MapaTulua extends React.Component {
     render() {
         return <MapContainer style={styleMap} center={posicionTulua} zoom={13} scrollWheelZoom={false}>
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={posicionTulua}>
-                <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
+            {listaGasolinerasCoordenada.map((cord) =>
+                <Marker position={cord}>
+                <Popup minWidth={90}>
+                    Estacion: <br />
+                    Direccion: <br />
+                    Telefono: <br />
+                    Latitud: {cord[0]}<br />
+                    Longitud: {cord[1]}<br />
+            </Popup>
             </Marker>
+            )}
         </MapContainer>;
     }
 }
