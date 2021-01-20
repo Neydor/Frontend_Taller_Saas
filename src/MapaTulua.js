@@ -29,20 +29,37 @@ const listaGasolinerasCoordenada = [[4.08654, -76.20139], [4.06028, -76.19903],
 const styleMap = { "width": "100%", "height": "500px" }
 
 class MapaTulua extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            empleados: []
+        }
+    }
+
+    componentWillMount() {
+        fetch('https://cdb6f5c2b23f.ngrok.io')
+            .then((response) => {
+                return response.json()
+            })
+            .then((empleados) => {
+                this.setState({ empleados: empleados })
+            })
+    }
+
     render() {
         return <MapContainer style={styleMap} center={posicionTulua} zoom={13} scrollWheelZoom={false}>
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {listaGasolinerasCoordenada.map((cord) =>
-                <Marker position={cord}>
+            {this.state.empleados.map((cord) =>
+                <Marker position={[cord.estacion_latitud,cord.estacion_longitud]}>
                 <Popup minWidth={90}>
-                    Estacion: <br />
-                    Direccion: <br />
-                    Telefono: <br />
-                    Latitud: {cord[0]}<br />
-                    Longitud: {cord[1]}<br />
+                    Estacion:{cord.estacion_nombre} <br />
+                    Direccion:{cord.estacion_direccion} <br />
+                    Telefono:{cord.estacion_telefono} <br />
+                    Latitud: {cord.estacion_longitud}<br />
+                    Longitud: {cord.estacion_latitud}<br />
             </Popup>
             </Marker>
             )}
