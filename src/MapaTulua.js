@@ -37,7 +37,7 @@ class MapaTulua extends React.Component {
     }
 
     componentWillMount() {
-        fetch('https://cdb6f5c2b23f.ngrok.io')
+        fetch('http://localhost:3128')
             .then((response) => {
                 return response.json()
             })
