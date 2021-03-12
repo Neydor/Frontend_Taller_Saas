@@ -27,7 +27,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'http://localhost:3128'
+            apiUrl: 'http://tallerbacken.jelastic.saveincloud.net'
         })
     }
 }

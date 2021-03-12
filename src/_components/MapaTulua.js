@@ -37,7 +37,7 @@ class MapaTulua extends React.Component {
     }
 
     componentWillMount() {
-        fetch('http://localhost:3128/estaciones')
+        fetch('http://tallerbacken.jelastic.saveincloud.net/estaciones')
             .then((response) => {
                 return response.json()
             })
